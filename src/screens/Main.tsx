@@ -10,6 +10,7 @@ import Albums from '../tabs/Main/Albums';
 import { RouteProp, ParamListBase } from '@react-navigation/native';
 /** Icons */
 import { MusicIcon, DownloadIcon, AlbumIcon } from '../../assets/Icons';
+import { useTheme } from '../components';
 
 
 
@@ -17,6 +18,7 @@ import { MusicIcon, DownloadIcon, AlbumIcon } from '../../assets/Icons';
 const Tab = createBottomTabNavigator();
 
 function Main() {
+    const theme = useTheme();
     const renderTabBarIcon = (route: RouteProp<ParamListBase, string>) => {
         if (route.name === 'AllMusic') {
             return <MusicIcon />;
@@ -39,7 +41,7 @@ function Main() {
                     height: 55,
                     borderTopColor: 'transparent'
                 },
-                tabBarActiveBackgroundColor: '#C4302B',
+                tabBarActiveBackgroundColor: theme.colors?.primary,
                 tabBarItemStyle: {
                     padding: 10,
                 },

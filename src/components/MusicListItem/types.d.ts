@@ -8,6 +8,7 @@ namespace PropData {
 }
 namespace PropTypes {
     type MusicListItem = {
-        data: PropData.MusicListItem
+        data: PropData.MusicListItem,
+        selected?: boolean
     }
 }
