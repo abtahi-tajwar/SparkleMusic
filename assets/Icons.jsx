@@ -155,7 +155,7 @@ export const MediaGoNextIcon = (props) => (
   </Svg>
 )
 
-export const MediaPauseIcon = (props) => (
+export const MediaPauseIcon = ({ color, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={22}
@@ -163,6 +163,23 @@ export const MediaPauseIcon = (props) => (
     fill="none"
     {...props}
   >
-    <Path fill={props?.fill ?? "#C4302B"} d="M6 4h3v14H6V4Zm7 14V4h3v14h-3Z" />
+    <Path fill={color} d="M6 4h3v14H6V4Zm7 14V4h3v14h-3Z" />
+  </Svg>
+)
+
+export const MediaPlayIcon = ({ color = null, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={17}
+    height={18}
+    fill="none"
+    {...props}
+  >
+    <Path
+      stroke={color ?? "white"}
+      strokeLinecap="round"
+      strokeWidth={2}
+      d="M1 8.7v5.365c0 1.778 2 2.902 3.629 2.038l2.529-1.341M1 5.62V3.335C1 1.557 3 .433 4.629 1.297L14.744 6.66a2.282 2.282 0 0 1 0 4.078L9.686 13.42"
+    />
   </Svg>
 )

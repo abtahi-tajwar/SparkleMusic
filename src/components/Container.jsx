@@ -7,7 +7,7 @@ function Container({ children }) {
   return (
     <LinearGradient 
       colors={[theme.colors.backgroundPrimary, '#000000']} 
-      locations={[0.05, 0.4]}
+      locations={[0, 0.4]}
       style={styles.body}
     >
         {children}
