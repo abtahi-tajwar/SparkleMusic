@@ -13,6 +13,7 @@ export function MiniPlayer() {
   const handleTogglePause = () => {
     setPaused(prev => !prev)
   }
+
   return (
     <View>
       <View style={styles.playerInfo}>

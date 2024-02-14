@@ -17,7 +17,7 @@ import { useTheme } from '../components';
 
 const Tab = createBottomTabNavigator();
 
-function Main() {
+function Home() {
     const theme = useTheme();
     const renderTabBarIcon = (route: RouteProp<ParamListBase, string>) => {
         if (route.name === 'AllMusic') {
@@ -55,7 +55,7 @@ function Main() {
     )
 }
 
-export default Main
+export default Home
 
 const styles = StyleSheet.create({
     body: {

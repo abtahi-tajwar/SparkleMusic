@@ -11,10 +11,14 @@ const MusicImage2 = require('../../../../assets/dev/music-3.png');
 const MusicImage3 = require('../../../../assets/dev/music-5.png');
 const MusicImage4 = require('../../../../assets/dev/music-6.png');
 
-import { Header, MusicListItem, MiniPlayer } from "../../../components"
+import { Header, MusicListItem, MiniPlayer, PermissionError } from "../../../components"
+import { useAppSelector } from "../../../redux/hooks";
 
 
 function AllMusic () {
+
+    const mediaPermission = useAppSelector(state => state.permission.media)
+    console.log("Media permission", mediaPermission)
     const musicData : Array<PropData.MusicListItem> = [
         { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
         { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
@@ -28,13 +32,14 @@ function AllMusic () {
         { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
         
     ]
+
     const flatListProp : Array<Utils.Id<PropTypes.MusicListItem>> = musicData.map((mData, mdi) => ({
         id: `${mdi}`,
         data: mData,
         selected: mdi === 2 ? true : false
     }))
     return (
-        <Container>
+        mediaPermission.granted ? <Container>
             <Header />
             <View style={style.listContainer}>
                 <MiniPlayer />
@@ -44,7 +49,8 @@ function AllMusic () {
                     keyExtractor={item => item.id}
                 />
             </View>
-        </Container>
+        </Container> : <PermissionError />
+        // <PermissionError />
     )
 }
 
