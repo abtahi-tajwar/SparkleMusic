@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import permission from './slices/permission'
+import music from './slices/music'
 // ...
 
 export const store = configureStore({
   reducer: {
-    permission: permission
+    permission: permission,
+    music: music
   }
 })
 

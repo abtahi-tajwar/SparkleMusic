@@ -16,7 +16,6 @@ export const permissionSlice = createSlice({
     initialState,
     reducers: {
         updateMediaPermisson(state, action) {
-            console.log("Response", action.payload)
             state.media = action.payload
         }
     }
