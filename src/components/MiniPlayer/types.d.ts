@@ -1,6 +1,12 @@
 namespace PropTypes {
     type MiniPlayer = {
-        data: string,
-        paused: boolean
+        data: {
+            title: string,
+            duration: string
+        },
+        status: Store.MusicStatus,
+        onPause: () => void,
+        onPlay: () => void,
+        onReplay: () => void
     }
 }

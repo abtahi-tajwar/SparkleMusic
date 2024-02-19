@@ -11,6 +11,7 @@ import useInitialize from "./hooks/useInitialize";
 import { Provider } from 'react-redux'
 import store from "./redux/store";
 import Home from "./screens/Home";
+import { useMusicEvents } from "./hooks/useMusicEvents";
 
 // import { PaperProvider } from 'react-native-paper';
 // import { theme } from './theme';
@@ -31,6 +32,7 @@ export default function Main() {
   if (fontError) console.log("Failed to load fonts", fontError)
 
   useInitialize();
+  useMusicEvents();
   return (
     !fontsLoaded ? <SafeAreaView><Text>Loading...</Text></SafeAreaView> : (
       <NavigationContainer>

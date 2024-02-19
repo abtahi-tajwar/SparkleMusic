@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { updateMediaPermisson } from '../redux/slices/permission';
 import { useAppDispatch } from '../redux/hooks';
 import { getMusicsFromDevice } from '../redux/slices/music';
+import { LogBox } from 'react-native';
 
 const useInitialize = () => {
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
@@ -29,6 +30,10 @@ const useInitialize = () => {
     const initializeMusic = () => {
         dispatch(getMusicsFromDevice())
     }
+
+    useEffect(() => {
+        LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+    }, [])
     useEffect(() => {
         if (permissionResponse) {
             if (permissionResponse.granted) {

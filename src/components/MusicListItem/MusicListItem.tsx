@@ -7,11 +7,11 @@ import Slider from "@react-native-community/slider";
 import { Flex, FlexSpaceBetween } from "../../atoms";
 import CustomText from "../../atoms/Typography/CustomText";
 
-export function MusicListItem({ data, selected }: PropTypes.MusicListItem) {
+export function MusicListItem({ data, selected, onClick }: PropTypes.MusicListItem) {
   const theme = useTheme();
 
-  const handleClickItem = () => {
-    console.log("Click detected");
+  const handleClickItem = ()  => {
+    onClick(data.id)
   };
   const [paused, setPaused] = useState<boolean>(true);
   const togglePause = () => {
@@ -20,7 +20,7 @@ export function MusicListItem({ data, selected }: PropTypes.MusicListItem) {
   const style = createDefaultStyles(theme);
   const selectedStyle = createSelectedStyles(theme);
   return !selected ? (
-    <TouchableHighlight onPress={handleClickItem}>
+    <TouchableHighlight onPress={() => handleClickItem()}>
       <View style={style.container}>
         <Image source={data.img} />
         <View>

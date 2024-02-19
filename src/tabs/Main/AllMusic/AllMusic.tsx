@@ -13,56 +13,79 @@ const MusicImage4 = require('../../../../assets/dev/music-6.png');
 
 import { Header, MusicListItem, MiniPlayer, PermissionError } from "../../../components"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getMusicsFromDevice } from "../../../redux/slices/music";
+import { getMusicsFromDevice, pauseMusic, playMusic, replayMusic, unpauseMusic } from "../../../redux/slices/music";
 import { NoData } from "../../../atoms";
+import { formatTimeFromSecond } from "../../../utils/helpers";
 
 
 function AllMusic () {
     const dispatch = useAppDispatch();
     const musicState = useAppSelector(state => state.music)
 
-    const [musicList, setMusicList] = useState<Array<Utils.Id<PropTypes.MusicListItem>>>([])
+    const [musicList, setMusicList] = useState<Array<Utils.Key<PropTypes.MusicListItemIterables>>>([])
 
     useEffect(() => {
         setMusicList(musicState.musics.map((music, mi) => ({
-            id: `${mi}`,
+            key: `${mi}`,
             data: {
+                id: music.id,
                 img: MusicImage1,
                 title: music.filename,
-                duration: `${music.duration}`
+                duration: formatTimeFromSecond(music.duration)
             },
             selected: false
         })))
-    }, [])
-    const mediaPermission = useAppSelector(state => state.permission.media)
-    const musicData : Array<PropData.MusicListItem> = [
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        { img: MusicImage1, title: "Pain - Ryan Jones", duration: "04:41" },
-        
-    ]
+    }, [musicState])
 
-    const flatListProp : Array<Utils.Id<PropTypes.MusicListItem>> = musicData.map((mData, mdi) => ({
-        id: `${mdi}`,
-        data: mData,
-        selected: mdi === 2 ? true : false
-    }))
+    const mediaPermission = useAppSelector(state => state.permission.media)
+
+    const handleMusicClick = (id: string) => {
+        handlePlay(id)
+    }
+    const handlePlay = (id: (string | undefined)) => {
+        if (id) {
+            dispatch(playMusic(id))
+            setMusicList(musicList.map((ml) => ({
+                ...ml,
+                selected: ml.data.id === id ? true : false
+            })))
+        }
+    }
+    const handleUnpause = () => {
+        dispatch(unpauseMusic())
+    }
+    const handleReplay = () => {
+        dispatch(replayMusic())
+    }
+    const handlePause = () => {
+        dispatch(pauseMusic())
+    }
+    
     return (
         mediaPermission.granted ? <Container>
             <Header />
             {musicState.musics.length != 0 ? <View style={style.listContainer}>
-                <MiniPlayer />
+                {musicState.currentMusic && <MiniPlayer 
+                    data={{
+                        title: musicState.currentMusic.asset.filename,
+                        duration: formatTimeFromSecond(musicState.currentMusic.asset.duration),
+                        // currentPosition: formatTimeFromSecond(musicState.currentMusic.currentPositionInMillseconds),
+                    }}
+                    status={musicState.currentMusic.status}
+                    onPause={handlePause}
+                    onPlay={handleUnpause}
+                    onReplay={handleReplay}
+                />}
                 <FlatList 
                     data={musicList}
-                    renderItem={({ item }) => <MusicListItem data={item.data} selected={item.selected} /> }
-                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => (
+                        <MusicListItem 
+                            data={item.data} 
+                            selected={item.selected} 
+                            onClick={handleMusicClick}
+                        /> 
+                    )}
+                    keyExtractor={item => item.key}
                 />
             </View> 
             :  <View style={style.noDataContainer}>
@@ -78,6 +101,8 @@ function AllMusic () {
 
 const style = StyleSheet.create({
     listContainer: {
+        flex: 1,
+        marginBottom: 55,
         padding: 22
     },
     noDataContainer: {

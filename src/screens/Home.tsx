@@ -11,6 +11,7 @@ import { RouteProp, ParamListBase } from '@react-navigation/native';
 /** Icons */
 import { MusicIcon, DownloadIcon, AlbumIcon } from '../../assets/Icons';
 import { useTheme } from '../components';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -39,7 +40,8 @@ function Home() {
                 tabBarStyle: {
                     backgroundColor: '#483737',
                     height: 55,
-                    borderTopColor: 'transparent'
+                    borderTopColor: 'transparent',
+                    fontFamily: 'Aleo_400Regular'
                 },
                 tabBarActiveBackgroundColor: theme.colors?.primary,
                 tabBarItemStyle: {

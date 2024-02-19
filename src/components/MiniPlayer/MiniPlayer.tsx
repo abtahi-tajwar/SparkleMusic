@@ -1,45 +1,42 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { IconButton } from '@react-native-material/core'
-import { MediaGoPreviousIcon, MediaGoNextIcon, MediaPauseIcon, MediaPlayIcon } from '../../../assets/Icons'
+import { MediaGoPreviousIcon, MediaGoNextIcon, MediaPauseIcon, MediaPlayIcon, MediaReplayIcon } from '../../../assets/Icons'
 import Slider from '@react-native-community/slider'
 import React, { useState } from 'react'
 import { useTheme } from '../Theme'
 import CustomText from '../../atoms/Typography/CustomText'
+import { CurrentMusicSeeker } from '../CurrentMusicSeeker'
 
-export function MiniPlayer() {
+export function MiniPlayer({ data, status, onPause, onPlay, onReplay } : PropTypes.MiniPlayer ) {
   const theme = useTheme()
   const styles = themedStyles(theme);
-  const [paused, setPaused] = useState(true);
+  // const [paused, setPaused] = useState(true);
   const handleTogglePause = () => {
-    setPaused(prev => !prev)
+    if (status === "playing") onPause()
+    else if (status === "paused") onPlay()
+    else if (status === "finished") onReplay()
   }
-
   return (
     <View>
       <View style={styles.playerInfo}>
         <View>
-          <CustomText style={styles.title}>Girl Band</CustomText>
-          <CustomText style={styles.timestamp}>02:30 / 05:10</CustomText>
+          <CustomText style={styles.title}>{data.title}</CustomText>
+          {/* <CustomText style={styles.timestamp}>{data.currentPosition} / {data.duration}</CustomText> */}
         </View>
         <View style={styles.playerNavButtons}>
           <IconButton icon={<MediaGoPreviousIcon />} />
-          <IconButton 
-            icon={ paused ? <MediaPauseIcon color={theme.colors?.primary} /> : <MediaPlayIcon color={theme.colors?.primary} /> } 
+          {(status === "playing") && <IconButton onPress={() => onPause()} icon={<MediaPauseIcon color={theme.colors?.primary} />}></IconButton>}
+          {(status === "paused") && <IconButton onPress={() => onPlay()} icon={<MediaPlayIcon color={theme.colors?.primary} />}></IconButton>}
+          {(status === "finished") && <IconButton onPress={() => onReplay()} icon={<MediaReplayIcon color={theme.colors?.primary} />}></IconButton>}
+          {/* <IconButton 
+            icon={ !(status === 'paused') ? <MediaPauseIcon color={theme.colors?.primary} /> : <MediaPlayIcon color={theme.colors?.primary} /> } 
             onPress={handleTogglePause}
-          />
+          /> */}
           <IconButton icon={<MediaGoNextIcon />} />
         </View>
       </View>
       <View>
-        <Slider
-          // style={{width: 200, height: 40}}
-          minimumValue={0}
-          maximumValue={1}
-          minimumTrackTintColor={theme.colors?.primary}
-          thumbTintColor={theme.colors?.primary}
-          maximumTrackTintColor="#ffffff"
-          style={{ marginLeft: -10, marginRight: -10 }}
-        />
+        <CurrentMusicSeeker />
       </View>
     </View>
   )

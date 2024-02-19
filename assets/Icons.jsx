@@ -183,3 +183,22 @@ export const MediaPlayIcon = ({ color = null, ...props }) => (
     />
   </Svg>
 )
+
+export const MediaReplayIcon = ({ color = null, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={19}
+    fill="none"
+    {...props}
+  >
+    <Path
+      fill={color ?? "white"}
+      d="M7.5 18.123a7.51 7.51 0 0 1-7.5-7.5.776.776 0 1 1 1.552 0A5.948 5.948 0 1 0 7.5 4.675H4.914a.776.776 0 0 1 0-1.552H7.5a7.5 7.5 0 0 1 0 15Z"
+    />
+    <Path
+      fill={color ?? "white"}
+      d="M7.5 7.778a.764.764 0 0 1-.548-.228L3.848 4.447a.776.776 0 0 1 0-1.097L6.952.247a.776.776 0 1 1 1.096 1.096L5.493 3.9l2.555 2.555A.776.776 0 0 1 7.5 7.778Z"
+    />
+  </Svg>
+)

@@ -1,4 +1,4 @@
 namespace Utils {
-    type Key<T> = T & { key : string }
-    type Id<T> = T & { id: string }
+    type Key<T> = T & { key : (string) }
+    type Id<T> = T & { id: (string | number) }
 }
