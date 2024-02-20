@@ -10,11 +10,11 @@ namespace PropData {
 namespace PropTypes {
     type MusicListItemIterables = {
         data: PropData.MusicListItem,
-        selected?: boolean
+        selected: boolean
     }
     type MusicListItem = {
         data: PropData.MusicListItem,
-        selected?: boolean,
+        selected: boolean,
         onClick: (id: string) => void
     }
 }

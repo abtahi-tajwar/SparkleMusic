@@ -6,22 +6,20 @@ import React, { useState } from 'react'
 import { useTheme } from '../Theme'
 import CustomText from '../../atoms/Typography/CustomText'
 import { CurrentMusicSeeker } from '../CurrentMusicSeeker'
+import { CurrentMusicDuration } from '../CurrentMusicDuration'
 
 export function MiniPlayer({ data, status, onPause, onPlay, onReplay } : PropTypes.MiniPlayer ) {
   const theme = useTheme()
   const styles = themedStyles(theme);
   // const [paused, setPaused] = useState(true);
-  const handleTogglePause = () => {
-    if (status === "playing") onPause()
-    else if (status === "paused") onPlay()
-    else if (status === "finished") onReplay()
-  }
+  
   return (
     <View>
       <View style={styles.playerInfo}>
         <View>
           <CustomText style={styles.title}>{data.title}</CustomText>
           {/* <CustomText style={styles.timestamp}>{data.currentPosition} / {data.duration}</CustomText> */}
+          <CurrentMusicDuration style={styles.timestamp} />
         </View>
         <View style={styles.playerNavButtons}>
           <IconButton icon={<MediaGoPreviousIcon />} />

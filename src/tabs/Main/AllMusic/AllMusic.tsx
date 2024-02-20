@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getMusicsFromDevice, pauseMusic, playMusic, replayMusic, unpauseMusic } from "../../../redux/slices/music";
 import { NoData } from "../../../atoms";
 import { formatTimeFromSecond } from "../../../utils/helpers";
+import BottomFloatPopup from "../../../components/BottomFloatMusicPopup/BottomFloatMusicPopup";
 
 
 function AllMusic () {
@@ -35,7 +36,7 @@ function AllMusic () {
             },
             selected: false
         })))
-    }, [musicState])
+    }, [musicState.musics])
 
     const mediaPermission = useAppSelector(state => state.permission.media)
 
@@ -87,6 +88,7 @@ function AllMusic () {
                     )}
                     keyExtractor={item => item.key}
                 />
+                {musicState.currentMusic && <BottomFloatPopup />}
             </View> 
             :  <View style={style.noDataContainer}>
                 <NoData 
@@ -102,7 +104,7 @@ function AllMusic () {
 const style = StyleSheet.create({
     listContainer: {
         flex: 1,
-        marginBottom: 55,
+        marginBottom: 35,
         padding: 22
     },
     noDataContainer: {

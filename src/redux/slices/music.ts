@@ -157,7 +157,7 @@ export const pauseMusic = createAsyncThunk(
         if (currentMusic) {
             const { playbackObject } = currentMusic
             try {  
-                await playbackObject.pauseAsync(); 
+                playbackObject.pauseAsync(); 
                 return {
                     ...currentMusic,
                     status: "paused" as Store.MusicStatus

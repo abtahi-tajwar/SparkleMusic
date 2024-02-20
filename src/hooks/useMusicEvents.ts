@@ -40,6 +40,7 @@ export const useMusicEvents = () => {
             }
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
               // The player has just finished playing and will stop. Maybe you want to play something else?
+                dispatch(updateCurrentMusicPosition(playbackStatus.positionMillis))
                 dispatch(updateCurrentMusicStatus("finished"))
             }
           }

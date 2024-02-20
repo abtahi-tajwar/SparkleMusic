@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SparkleMusic",
-    "slug": "SparkleMusic",
+    "slug": "sparkle-music",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,19 +15,27 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.abtahitajwar.sparklemusic"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.abtahitajwar.sparklemusic"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b4c1ae71-6f31-4f3b-bc29-84b360964483"
+      }
+    },
+    "owner": "abtahi-tajwar"
   }
 }

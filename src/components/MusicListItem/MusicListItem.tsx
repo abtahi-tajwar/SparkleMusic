@@ -17,9 +17,10 @@ export function MusicListItem({ data, selected, onClick }: PropTypes.MusicListIt
   const togglePause = () => {
     setPaused(prev => !prev)
   }
-  const style = createDefaultStyles(theme);
+  const style = createDefaultStyles(theme, selected);
   const selectedStyle = createSelectedStyles(theme);
-  return !selected ? (
+  return (
+  // !selected ? (
     <TouchableHighlight onPress={() => handleClickItem()}>
       <View style={style.container}>
         <Image source={data.img} />
@@ -30,40 +31,33 @@ export function MusicListItem({ data, selected, onClick }: PropTypes.MusicListIt
         <IconButton style={style.iconButton} icon={(props) => <OptionsIconHorizontal />} />
       </View>
     </TouchableHighlight>
-  ) : (
-    <Flex style={selectedStyle.container}>
-      <View style={selectedStyle.imageContainer}>
-        <Image source={data.img} style={selectedStyle.image} />
-      </View>
-      <View style={selectedStyle.content}>
-        <FlexSpaceBetween>
-          <View>
-            <CustomText variant="300" style={{ color: 'white' }}>{data.title}</CustomText>
-            <CustomText variant="300" style={{ color: theme.colors?.primaryLight }}>{data.duration}</CustomText>
-          </View>
-          <View>
-            <IconButton icon={
-              paused 
-                ? <MediaPauseIcon color={theme.colors?.primary} />
-                : <MediaPlayIcon color={theme.colors?.primary} />
-              } 
-              onPress={togglePause}
-            />
-          </View>
-        </FlexSpaceBetween>
-        <Slider 
-          minimumValue={0}
-          maximumValue={1}
-          minimumTrackTintColor={theme.colors?.primary}
-          thumbTintColor={theme.colors?.primary}
-          maximumTrackTintColor="#ffffff"
-          style={{ marginLeft: -10, marginRight: -10 }}
-        />
-      </View>
-    </Flex>
-  );
+    )
+  // ) : (
+  //   <Flex style={selectedStyle.container}>
+  //     <View style={selectedStyle.imageContainer}>
+  //       <Image source={data.img} style={selectedStyle.image} />
+  //     </View>
+  //     <View style={selectedStyle.content}>
+  //       <FlexSpaceBetween>
+  //         <View>
+  //           <CustomText variant="300" style={{ color: 'white' }}>{data.title}</CustomText>
+  //           <CustomText variant="300" style={{ color: theme.colors?.primaryLight }}>{data.duration}</CustomText>
+  //         </View>
+  //         <View>
+  //           <IconButton icon={
+  //             paused 
+  //               ? <MediaPauseIcon color={theme.colors?.primary} />
+  //               : <MediaPlayIcon color={theme.colors?.primary} />
+  //             } 
+  //             onPress={togglePause}
+  //           />
+  //         </View>
+  //       </FlexSpaceBetween>
+  //     </View>
+  //   </Flex>
+  // );
 }
-const createDefaultStyles = (theme: Config.Theme) => {
+const createDefaultStyles = (theme: Config.Theme, selected: boolean) => {
   return StyleSheet.create({
     container: {
       gap: 8,
@@ -72,6 +66,8 @@ const createDefaultStyles = (theme: Config.Theme) => {
       borderRightColor: theme.colors?.primary,
       borderRightWidth: 2,
       marginTop: 5,
+      paddingLeft: 5,
+      backgroundColor: selected ? theme.colors?.backgroundPrimary : "transparent",
     },
     image: {
       height: 40,
