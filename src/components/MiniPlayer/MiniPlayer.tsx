@@ -7,6 +7,7 @@ import { useTheme } from '../Theme'
 import CustomText from '../../atoms/Typography/CustomText'
 import { CurrentMusicSeeker } from '../CurrentMusicSeeker'
 import { CurrentMusicDuration } from '../CurrentMusicDuration'
+import { CurrentMusicActionButtons } from '../CurrentMusicActionButtons/CurrentMusicActionButtons'
 
 export function MiniPlayer({ data, status, onPause, onPlay, onReplay } : PropTypes.MiniPlayer ) {
   const theme = useTheme()
@@ -21,17 +22,14 @@ export function MiniPlayer({ data, status, onPause, onPlay, onReplay } : PropTyp
           {/* <CustomText style={styles.timestamp}>{data.currentPosition} / {data.duration}</CustomText> */}
           <CurrentMusicDuration style={styles.timestamp} />
         </View>
-        <View style={styles.playerNavButtons}>
+        {/* <View style={styles.playerNavButtons}>
           <IconButton icon={<MediaGoPreviousIcon />} />
           {(status === "playing") && <IconButton onPress={() => onPause()} icon={<MediaPauseIcon color={theme.colors?.primary} />}></IconButton>}
           {(status === "paused") && <IconButton onPress={() => onPlay()} icon={<MediaPlayIcon color={theme.colors?.primary} />}></IconButton>}
           {(status === "finished") && <IconButton onPress={() => onReplay()} icon={<MediaReplayIcon color={theme.colors?.primary} />}></IconButton>}
-          {/* <IconButton 
-            icon={ !(status === 'paused') ? <MediaPauseIcon color={theme.colors?.primary} /> : <MediaPlayIcon color={theme.colors?.primary} /> } 
-            onPress={handleTogglePause}
-          /> */}
           <IconButton icon={<MediaGoNextIcon />} />
-        </View>
+        </View> */}
+        <CurrentMusicActionButtons style={styles.playerNavButtons} />
       </View>
       <View>
         <CurrentMusicSeeker />

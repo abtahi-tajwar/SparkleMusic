@@ -1,15 +1,7 @@
 import React, { Component, useEffect, useState } from "react"
 import { FlatList, View, Text, StyleSheet } from "react-native"
 import Container from "../../../components/Container"
-// import MusicImage1 from '../../../../assets/dev/music-2.png'
-// import MusicImage2 from '../../../../assets/dev/music-3.png'
-// import MusicImage3 from '../../../../assets/dev/music-4.png'
-// import MusicImage4 from '../../../../assets/dev/music-5.png'
-
 const MusicImage1 = require('../../../../assets/dev/music-2.png');
-const MusicImage2 = require('../../../../assets/dev/music-3.png');
-const MusicImage3 = require('../../../../assets/dev/music-5.png');
-const MusicImage4 = require('../../../../assets/dev/music-6.png');
 
 import { Header, MusicListItem, MiniPlayer, PermissionError } from "../../../components"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -17,6 +9,9 @@ import { getMusicsFromDevice, pauseMusic, playMusic, replayMusic, unpauseMusic }
 import { NoData } from "../../../atoms";
 import { formatTimeFromSecond } from "../../../utils/helpers";
 import BottomFloatPopup from "../../../components/BottomFloatMusicPopup/BottomFloatMusicPopup";
+import { youtubeAPI } from "../../../http/axios";
+import { apis } from "../../../http/routes";
+import { AxiosResponse } from "axios";
 
 
 function AllMusic () {
@@ -26,6 +21,9 @@ function AllMusic () {
     const [musicList, setMusicList] = useState<Array<Utils.Key<PropTypes.MusicListItemIterables>>>([])
 
     useEffect(() => {
+        youtubeAPI.get(apis.youtubeSearch({ q: "calm coding music" })).then((res : AxiosResponse<string>) => {
+            console.log(res.data)
+        })
         setMusicList(musicState.musics.map((music, mi) => ({
             key: `${mi}`,
             data: {
