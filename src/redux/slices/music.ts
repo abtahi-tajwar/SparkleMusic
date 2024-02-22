@@ -171,8 +171,8 @@ export const pauseMusic = createAsyncThunk(
         
     }
 )
-export const permissionSlice = createSlice({
-    name: 'permission',
+export const musicSlice = createSlice({
+    name: 'music',
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
@@ -289,6 +289,6 @@ export const permissionSlice = createSlice({
 })
 
 
-export const { updateMusics, setCurrentMusic, updateCurrentMusicStatus, updateCurrentMusicPosition } = permissionSlice.actions
+export const { updateMusics, setCurrentMusic, updateCurrentMusicStatus, updateCurrentMusicPosition } = musicSlice.actions
 
-export default permissionSlice.reducer
+export default musicSlice.reducer

@@ -64,12 +64,12 @@ export default function BottomFloatPopup() {
         />
         <CustomText style={style.text}>{currentMusic?.asset.filename}</CustomText>
       </Animated.View>
+      
     </TouchableOpacity>
   )
 }
 
 const createStyle = (theme : Config.Theme) => {
-  
     return StyleSheet.create({
           container: {
             // transformOrigin: "center",

@@ -12,6 +12,7 @@ import BottomFloatPopup from "../../../components/BottomFloatMusicPopup/BottomFl
 import { youtubeAPI } from "../../../http/axios";
 import { apis } from "../../../http/routes";
 import { AxiosResponse } from "axios";
+import { searchMusicFromYoutube } from "../../../redux/slices/youtube";
 
 
 function AllMusic () {
@@ -21,9 +22,11 @@ function AllMusic () {
     const [musicList, setMusicList] = useState<Array<Utils.Key<PropTypes.MusicListItemIterables>>>([])
 
     useEffect(() => {
-        youtubeAPI.get(apis.youtubeSearch({ q: "calm coding music" })).then((res : AxiosResponse<string>) => {
-            console.log(res.data)
-        })
+        // youtubeAPI.get(apis.youtubeSearch({ q: "calm coding music" })).then((res : AxiosResponse<string>) => {
+        //     console.log(JSON.stringify(res.data))
+        // })
+
+        // dispatch(searchMusicFromYoutube({ q: "blue jeans kodom", maxResults: 5 })).then(res => console.log("Final search result", JSON.stringify(res)))
         setMusicList(musicState.musics.map((music, mi) => ({
             key: `${mi}`,
             data: {
