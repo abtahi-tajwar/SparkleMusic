@@ -4,10 +4,11 @@ import React from 'react'
 import { DownloadIcon, DownloadIcon2, PreviewIcon } from '../../../assets/Icons'
 import CustomText from '../../atoms/Typography/CustomText'
 import { useTheme } from '../Theme'
+import { renderExceprt } from '../../utils/helpers'
 
 const TempMusicImage = require('../../../assets/dev/MusicScreenImg.jpg')
 
-export default function YoutubeDownloadCard() {
+export default function YoutubeDownloadCard({ id, thumbnail, title, description } : PropTypes.YoutubeDownloadCard) {
     const theme = useTheme();
     const handlePreviewPress = () => {
         console.log("Pressed")
@@ -18,7 +19,7 @@ export default function YoutubeDownloadCard() {
   return (
     <View style={styles.container}>
         <View style={styles.imgContainer}>
-            <Image source={TempMusicImage} style={styles.img} />
+            <Image source={{ uri: thumbnail }} style={styles.img} />
         </View>
       <View style={styles.previewBtnContainer}>
         <TouchableHighlight>
@@ -29,7 +30,7 @@ export default function YoutubeDownloadCard() {
         </TouchableHighlight>
       </View>
       <View style={styles.detailsContainer}>
-        <CustomText style={styles.title}>Sphere - Jongho Baek (Original Cover)</CustomText>
+        <CustomText style={styles.title}>{renderExceprt(title, 50)}</CustomText>
         <TouchableHighlight>
             <View style={styles.downloadBtn}>
                 <DownloadIcon2 color={'white'}/>
@@ -48,7 +49,7 @@ const createStyles = ({ theme } : { theme: Config.Theme}) => {
             // flex: 1,
             position: 'relative',
             backgroundColor: theme.colors?.backgroundPrimary,
-            // height: 200
+            minHeight: 200
         },
         imgContainer: {
             width: '100%',
@@ -80,7 +81,10 @@ const createStyles = ({ theme } : { theme: Config.Theme}) => {
             padding: 6
         },
         title: {
-            fontSize: 8,
+            fontSize: 14,
+            marginBottom: 'auto',
+            height: 50,
+            overflow: 'hidden'
         },
         downloadBtn: {
             flexDirection: 'row',

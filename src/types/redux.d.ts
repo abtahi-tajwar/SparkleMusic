@@ -46,4 +46,14 @@ namespace Store {
     }
 
     type MusicStatus = 'playing' | 'paused' | 'finished' | 'buffering'
+
+    type Youtube = {
+        searchResults: Array<APIResponse.YoutubeAPIResponseVideoData>,
+        loading: {
+            searchMusicFromYoutube: boolean
+        },
+        errors: {
+            searchMusicFromYoutube: unknown
+        }
+    }
 }

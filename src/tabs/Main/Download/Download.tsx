@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight } from "react-native"
+import React, { useEffect, useState } from 'react'
+import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight, TextInputChangeEventData, NativeSyntheticEvent } from "react-native"
 import Container from '../../../components/Container'
 import { Header, useTheme } from '../../../components'
 import style from './style'
@@ -9,6 +9,8 @@ import { SearchIcon } from '../../../../assets/Icons'
 import { Dimensions } from 'react-native'
 import { Grid } from '../../../atoms/Grid/Grid'
 import { FlatList } from 'react-native'
+import { searchMusicFromYoutube } from '../../../redux/slices/youtube'
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 // import { Button } from '@react-native-material/core'
 
 const NUMBER_OF_COLUMNS = 2;
@@ -17,11 +19,22 @@ function Download() {
   const theme = useTheme();
   const screenWidth = Dimensions.get('window').width
   const styles = createStyles({ theme });
-  const downloadList = [
-    { id: "ojksfjd", data: null },
-    { id: "wuroieuw", data: null },
-    { id: "whunuis", data: null }
-  ]
+  const dispatch = useAppDispatch();
+  const searchResults = useAppSelector(state => state.youtube.searchResults)
+  const [searchInput, setSearchInput] = useState("")
+
+  useEffect(() => {
+    console.log(JSON.stringify(searchResults))
+  }, [searchResults])
+  const handleSearch = () => {
+    dispatch(searchMusicFromYoutube({
+      q: searchInput,
+      maxResults: 10
+    }))
+  }
+  const handleSearchInput = (text : string) => {
+    setSearchInput(text)
+  }
   return (
     <Container>
         <Header />
@@ -31,9 +44,11 @@ function Download() {
               placeholder='Type to search music from youtube'
               style={styles.searchInput}
               placeholderTextColor={'white'}
+              value={searchInput}
+              onChangeText={(text) => handleSearchInput(text)}
             />
             
-            <TouchableHighlight>
+            <TouchableHighlight onPress={handleSearch}>
                 <View style={styles.searchBtn}>
                     <SearchIcon color={'white'} />
                     <CustomText>Search</CustomText>
@@ -48,18 +63,27 @@ function Download() {
               data={[1, 1]}
               element={() => <YoutubeDownloadCard />}
             /> */}
-            <FlatList 
-              data={downloadList}
-              numColumns={NUMBER_OF_COLUMNS}
-              keyExtractor={(item) => item.id}
-              columnWrapperStyle={{ gap: 10 }}
-              contentContainerStyle={{ gap: 10 }}
-              renderItem={() => (
-                <View style={{ flex: 1/NUMBER_OF_COLUMNS }}>
-                  <YoutubeDownloadCard />
-                </View>
-              )}
-            />
+            <View style={{ height: 'auto', marginBottom: 330 }}>
+              <FlatList 
+                // style={{ flex: 1 }}
+                data={searchResults}
+                numColumns={NUMBER_OF_COLUMNS}
+                keyExtractor={(item) => item.id.videoId}
+                columnWrapperStyle={{ gap: 10 }}
+                contentContainerStyle={{ gap: 10 }}
+                // style={{ marginBottom: 1000 }}
+                renderItem={(data) => (
+                  <View style={{ flex: 1/NUMBER_OF_COLUMNS }}>
+                    <YoutubeDownloadCard 
+                      id={data.item.id.videoId}
+                      title={data.item.snippet.title}
+                      thumbnail={data.item.snippet.thumbnails.default.url}
+                      description={data.item.snippet.description}
+                    />
+                  </View>
+                )}
+              />
+            </View>
         </View>
     </Container>
   )

@@ -3,12 +3,13 @@ import { youtubeAPI } from '../../http/axios'
 import { AxiosResponse } from 'axios'
 import { apis } from '../../http/routes'
 // Define the initial state using that type
-const initialState: Store.Permission = {
-    media: {
-        canAskAgain: true,
-        expires: "never",
-        granted: false,
-        status: "undetermined"
+const initialState: Store.Youtube = {
+    searchResults: [],
+    loading: {
+        searchMusicFromYoutube: false
+    },
+    errors: {
+        searchMusicFromYoutube: null
     }
 }
 
@@ -18,7 +19,7 @@ export const searchMusicFromYoutube = createAsyncThunk(
     async ({ q, maxResults = 5 } : SearchMusicParamType, thunkAPI) => {
         try {
             const searchResult : AxiosResponse<APIResponse.YoutubeSearch> = await youtubeAPI.get(apis.youtubeSearch({ q: q, maxResults: maxResults }))
-            return searchResult.data
+            return { data: searchResult.data }
         } catch (error) {
             thunkAPI.rejectWithValue({ error })
         }
@@ -33,6 +34,21 @@ export const youtubeSlice = createSlice({
         // updateMediaPermisson(state, action) {
         //     state.media = action.payload
         // }
+    },
+    extraReducers (builder) {
+        // Search Music From Youtube
+        builder.addCase(searchMusicFromYoutube.pending, (state, action) => {
+            state.loading.searchMusicFromYoutube = true;
+        }),
+        builder.addCase(searchMusicFromYoutube.fulfilled, (state, action) => {
+            state.loading.searchMusicFromYoutube = true;
+            if (action.payload) {
+                state.searchResults = action.payload.data.items
+            }
+        }),
+        builder.addCase(searchMusicFromYoutube.rejected, (state, action) => {
+            state.errors.searchMusicFromYoutube = action.error;
+        })
     }
 })
 

@@ -1,5 +1,5 @@
 export const apis : ApisType = {
-    youtubeSearch: ({ q, maxResults = 5 }) => `/v3/search?q=${q}&part=snippet`,
+    youtubeSearch: ({ q, maxResults = 5 }) => `/v3/search?q=${q}&maxResults=${maxResults}&part=snippet`,
     getYoutubeVideosByIds : ({ idsString }) => `/v3/videos?id=${idsString}`
 }
 
