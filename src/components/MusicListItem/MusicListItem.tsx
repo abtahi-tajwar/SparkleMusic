@@ -6,6 +6,7 @@ import { useTheme } from "../Theme";
 import Slider from "@react-native-community/slider";
 import { Flex, FlexSpaceBetween } from "../../atoms";
 import CustomText from "../../atoms/Typography/CustomText";
+import { renderExceprt } from "../../utils/helpers";
 
 export function MusicListItem({ data, selected, onClick }: PropTypes.MusicListItem) {
   const theme = useTheme();
@@ -25,7 +26,7 @@ export function MusicListItem({ data, selected, onClick }: PropTypes.MusicListIt
       <View style={style.container}>
         <Image source={data.img} />
         <View>
-          <CustomText variant="300" style={style.title}>{data.title}</CustomText>
+          <CustomText variant="300" style={style.title}>{renderExceprt(data.title, 35)}</CustomText>
           <CustomText variant="300" style={style.duration}>{data.duration}</CustomText>
         </View>
         <IconButton style={style.iconButton} icon={(props) => <OptionsIconHorizontal />} />

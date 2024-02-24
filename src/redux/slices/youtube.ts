@@ -18,8 +18,6 @@ export const searchMusicFromYoutube = createAsyncThunk(
     async ({ q, maxResults = 5 } : SearchMusicParamType, thunkAPI) => {
         try {
             const searchResult : AxiosResponse<APIResponse.YoutubeSearch> = await youtubeAPI.get(apis.youtubeSearch({ q: q, maxResults: maxResults }))
-            // const ids = searchResult.data.items.map(item => item.id.videoId).join(",")
-            // const detailsSearchResult = await youtubeAPI.get(apis.getYoutubeVideosByIds({ idsString: ids }))
             return searchResult.data
         } catch (error) {
             thunkAPI.rejectWithValue({ error })

@@ -14,6 +14,7 @@ import CustomText from "../../atoms/Typography/CustomText";
 import { CurrentMusicSeeker } from "../CurrentMusicSeeker";
 import { CurrentMusicDuration } from "../CurrentMusicDuration";
 import { CurrentMusicActionButtons } from "../CurrentMusicActionButtons/CurrentMusicActionButtons";
+import { renderExceprt } from "../../utils/helpers";
 
 export function MiniPlayer({
   data,
@@ -30,7 +31,7 @@ export function MiniPlayer({
     <View>
       <View style={styles.playerInfo}>
         <View>
-          <CustomText style={styles.title}>{data.title}</CustomText>
+          <CustomText style={styles.title}>{renderExceprt(data.title, 20) }</CustomText>
           {/* <CustomText style={styles.timestamp}>{data.currentPosition} / {data.duration}</CustomText> */}
           <CurrentMusicDuration style={styles.timestamp} />
         </View>

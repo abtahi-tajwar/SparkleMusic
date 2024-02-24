@@ -48,9 +48,9 @@ export function CurrentMusicActionButtons({
         <IconButton
           icon={
             varient === "mini" ? (
-              <MediaGoPreviousIcon />
+              <MediaGoPreviousIcon color={'white'} />
             ) : (
-              <MediaGoPreviousIconLarge />
+              <MediaGoPreviousIconLarge color={'white'} />
             )
           }
         />
@@ -83,16 +83,16 @@ export function CurrentMusicActionButtons({
             onPress={() => onReplay()}
             icon={
               varient === "mini" ? (
-                <MediaReplayIcon color={theme.colors?.primary} />
+                <MediaReplayIcon color={theme.colors.primary} />
               ) : (
-                <MediaReplayIconLarge color={theme.colors?.primary} />
+                <MediaReplayIconLarge color={theme.colors.primary} />
               )
             }
           ></IconButton>
         )}
         <IconButton
           icon={
-            varient === "mini" ? <MediaGoNextIcon /> : <MediaGoNextIconLarge />
+            varient === "mini" ? <MediaGoNextIcon color={'white'} /> : <MediaGoNextIconLarge color={'white'}  />
           }
         />
       </View>

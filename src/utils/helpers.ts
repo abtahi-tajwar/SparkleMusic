@@ -34,3 +34,7 @@ export function formatTimeFromMillisecond(milliseconds : number) {
     
     return formattedTime;
 }
+
+export function renderExceprt (str : string, length : number) {
+    return (str.length > length) ? str.substring(0, length)+"..." : str
+}

@@ -33,12 +33,12 @@ function MusicScreen() {
             <CurrentMusicSeeker />
           </View>
           <View style={styles.actionBtnContainer}>
-            <MediaShuffleIcon />
+            <MediaShuffleIcon color={'white'} />
             <CurrentMusicActionButtons
               style={styles.actionBtn}
               varient="full"
             />
-            <MediaRepeatIcon />
+            <MediaRepeatIcon color={'white'} />
           </View>
         </View>
       )}

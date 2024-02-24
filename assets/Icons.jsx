@@ -138,7 +138,7 @@ export const MediaGoPreviousIcon = (props) => (
   </Svg>
 );
 
-export const MediaGoNextIcon = (props) => (
+export const MediaGoNextIcon = ({ color, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -147,7 +147,7 @@ export const MediaGoNextIcon = (props) => (
     {...props}
   >
     <Path
-      fill={props?.fill ?? "#fff"}
+      fill={color ?? "#fff"}
       fillRule="evenodd"
       d="M12.048 13.583 4.5 17.94a1 1 0 0 1-1.5-.866V8.002a1 1 0 0 1 1.5-.867l7.548 4.358V8.001a1 1 0 0 1 1.5-.866l7.857 4.537a1 1 0 0 1 0 1.732l-7.857 4.536a1 1 0 0 1-1.5-.866v-3.491Z"
       clipRule="evenodd"
@@ -167,7 +167,7 @@ export const MediaPauseIcon = ({ color, ...props }) => (
   </Svg>
 );
 
-export const MediaPlayIcon = ({ color = null, ...props }) => (
+export const MediaPlayIcon = ({ color, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={17}
@@ -184,7 +184,7 @@ export const MediaPlayIcon = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaReplayIcon = ({ color = null, ...props }) => (
+export const MediaReplayIcon = ({ color, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={15}
@@ -203,7 +203,7 @@ export const MediaReplayIcon = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaPlayIconLarge = ({ color = null, ...props }) => (
+export const MediaPlayIconLarge = ({ color, ...props }) => (
   <Svg
     width={63}
     height={63}
@@ -219,7 +219,7 @@ export const MediaPlayIconLarge = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaGoPreviousIconLarge = ({ color = null, ...props }) => (
+export const MediaGoPreviousIconLarge = ({ color, ...props }) => (
   <Svg
     width={52}
     height={52}
@@ -237,7 +237,7 @@ export const MediaGoPreviousIconLarge = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaGoNextIconLarge = ({ color = null, ...props }) => (
+export const MediaGoNextIconLarge = ({ color, ...props }) => (
   <Svg
     width={56}
     height={56}
@@ -255,7 +255,7 @@ export const MediaGoNextIconLarge = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaShuffleIcon = ({ color = null, ...props }) => (
+export const MediaShuffleIcon = ({ color, ...props }) => (
   <Svg
     width={35}
     height={35}
@@ -266,12 +266,12 @@ export const MediaShuffleIcon = ({ color = null, ...props }) => (
   >
     <Path
       d="M32.4926 24.3824C32.5943 24.484 32.6749 24.6046 32.73 24.7374C32.785 24.8702 32.8134 25.0125 32.8134 25.1562C32.8134 25.3 32.785 25.4423 32.73 25.5751C32.6749 25.7079 32.5943 25.8285 32.4926 25.9301L29.2113 29.2113C29.0061 29.4166 28.7277 29.5319 28.4375 29.5319C28.1473 29.5319 27.8689 29.4166 27.6637 29.2113C27.4584 29.0061 27.3431 28.7277 27.3431 28.4375C27.3431 28.1473 27.4584 27.8689 27.6637 27.6637L29.0787 26.25H27.4723C25.9056 26.2487 24.3618 25.8741 22.9688 25.1573C21.5758 24.4404 20.3736 23.402 19.4619 22.1279L13.758 14.1436C13.0489 13.1527 12.1138 12.345 11.0304 11.7875C9.94692 11.23 8.74622 10.9386 7.52773 10.9375H4.375C4.08492 10.9375 3.80672 10.8223 3.6016 10.6171C3.39648 10.412 3.28125 10.1338 3.28125 9.84375C3.28125 9.55367 3.39648 9.27547 3.6016 9.07035C3.80672 8.86523 4.08492 8.75 4.375 8.75H7.52773C9.09438 8.7513 10.6382 9.12589 12.0312 9.84273C13.4242 10.5596 14.6264 11.598 15.5381 12.8721L21.242 20.8564C21.9511 21.8473 22.8862 22.655 23.9696 23.2125C25.0531 23.77 26.2538 24.0614 27.4723 24.0625H29.0787L27.6637 22.6488C27.4584 22.4436 27.3431 22.1652 27.3431 21.875C27.3431 21.5848 27.4584 21.3064 27.6637 21.1012C27.8689 20.8959 28.1473 20.7806 28.4375 20.7806C28.7277 20.7806 29.0061 20.8959 29.2113 21.1012L32.4926 24.3824ZM19.5508 14.6289C19.6677 14.7124 19.7998 14.772 19.9398 14.8044C20.0797 14.8369 20.2247 14.8414 20.3663 14.8178C20.508 14.7942 20.6437 14.7429 20.7655 14.6668C20.8874 14.5908 20.9931 14.4915 21.0766 14.3746L21.2406 14.1463C21.9496 13.1547 22.8847 12.3464 23.9685 11.7884C25.0522 11.2304 26.2533 10.9387 27.4723 10.9375H29.0787L27.6637 12.3512C27.4584 12.5564 27.3431 12.8348 27.3431 13.125C27.3431 13.4152 27.4584 13.6936 27.6637 13.8988C27.8689 14.1041 28.1473 14.2194 28.4375 14.2194C28.7277 14.2194 29.0061 14.1041 29.2113 13.8988L32.4926 10.6176C32.5943 10.516 32.6749 10.3954 32.73 10.2626C32.785 10.1298 32.8134 9.98748 32.8134 9.84375C32.8134 9.70001 32.785 9.55769 32.73 9.42491C32.6749 9.29213 32.5943 9.1715 32.4926 9.06992L29.2113 5.78867C29.0061 5.58344 28.7277 5.46814 28.4375 5.46814C28.1473 5.46814 27.8689 5.58344 27.6637 5.78867C27.4584 5.9939 27.3431 6.27226 27.3431 6.5625C27.3431 6.85274 27.4584 7.13109 27.6637 7.33633L29.0787 8.75H27.4723C25.9056 8.7513 24.3618 9.12589 22.9688 9.84273C21.5758 10.5596 20.3736 11.598 19.4619 12.8721L19.2979 13.1004C19.2139 13.2173 19.1538 13.3496 19.121 13.4897C19.0883 13.6299 19.0835 13.7751 19.107 13.9172C19.1305 14.0592 19.1818 14.1951 19.258 14.3173C19.3341 14.4394 19.4336 14.5453 19.5508 14.6289ZM15.4492 20.3711C15.3323 20.2876 15.2002 20.228 15.0602 20.1955C14.9203 20.1631 14.7753 20.1586 14.6337 20.1822C14.492 20.2058 14.3563 20.2571 14.2345 20.3332C14.1126 20.4092 14.0069 20.5085 13.9234 20.6254L13.7594 20.8537C13.0504 21.8453 12.1153 22.6536 11.0315 23.2116C9.94781 23.7696 8.74669 24.0613 7.52773 24.0625H4.375C4.08492 24.0625 3.80672 24.1777 3.6016 24.3829C3.39648 24.588 3.28125 24.8662 3.28125 25.1562C3.28125 25.4463 3.39648 25.7245 3.6016 25.9296C3.80672 26.1348 4.08492 26.25 4.375 26.25H7.52773C9.09438 26.2487 10.6382 25.8741 12.0312 25.1573C13.4242 24.4404 14.6264 23.402 15.5381 22.1279L15.7021 21.8996C15.7861 21.7827 15.8462 21.6504 15.879 21.5102C15.9117 21.3701 15.9165 21.2248 15.893 21.0828C15.8695 20.9408 15.8182 20.8049 15.742 20.6827C15.6659 20.5606 15.5664 20.4547 15.4492 20.3711Z"
-      fill="#F8F8F8"
+      fill={color ?? "#F8F8F8"}
     />
   </Svg>
 );
 
-export const MediaRepeatIcon = ({ color = null, ...props }) => (
+export const MediaRepeatIcon = ({ color, ...props }) => (
   <Svg
     width={35}
     height={35}
@@ -287,7 +287,7 @@ export const MediaRepeatIcon = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaPauseIconLarge = ({ color = null, ...props }) => (
+export const MediaPauseIconLarge = ({ color, ...props }) => (
   <Svg
     width={63}
     height={63}
@@ -303,7 +303,7 @@ export const MediaPauseIconLarge = ({ color = null, ...props }) => (
   </Svg>
 );
 
-export const MediaReplayIconLarge = ({ color = null, ...props }) => (
+export const MediaReplayIconLarge = ({ color, ...props }) => (
   <Svg
     width={35}
     height={43}
@@ -322,3 +322,67 @@ export const MediaReplayIconLarge = ({ color = null, ...props }) => (
     />
   </Svg>
 );
+
+export const PreviewIcon = ({ color, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={12}
+    height={9}
+    fill="none"
+    {...props}
+  >
+    <Path
+      fill={color ?? "#fff"}
+      d="M6 0c3.75 0 6 4.125 6 4.125S9.75 8.25 6 8.25 0 4.125 0 4.125 2.25 0 6 0Zm0 .75C3.36.75 1.498 3.188.881 4.125 1.498 5.061 3.36 7.5 6 7.5c2.64 0 4.502-2.438 5.119-3.375C10.502 3.189 8.64.75 6 .75Zm0 .75a2.625 2.625 0 1 1 0 5.25A2.625 2.625 0 0 1 6 1.5Zm0 .75a1.877 1.877 0 0 0-1.875 1.875C4.125 5.159 4.965 6 6 6a1.877 1.877 0 0 0 1.875-1.875c0-1.034-.84-1.875-1.875-1.875Z"
+    />
+  </Svg>
+)
+
+export const DownloadIcon2 = ({ color, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={12}
+    height={12}
+    fill="none"
+    {...props}
+  >
+    <Path
+      stroke={ color ?? "#fff" }
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 1.5V8m0 0 2-2.188M6 8 4 5.812M7.5 10.5h-3c-1.414 0-2.121 0-2.56-.44-.44-.439-.44-1.146-.44-2.56m9 0c0 1.414 0 2.121-.44 2.56-.15.15-.33.25-.56.314"
+    />
+  </Svg>
+)
+
+export const SearchIcon = ({ color, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={15}
+    fill="none"
+    {...props}
+  >
+    <Path
+      stroke={ color ?? "#fff" }
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M10.241 10.252 14 14m-2.167-7.583A5.417 5.417 0 1 1 1 6.417a5.417 5.417 0 0 1 10.833 0Z"
+    />
+  </Svg>
+)
+export const SingleMusicIcon = ({ color, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={21}
+    fill="none"
+    {...props}
+  >
+    <Path
+      fill={ color ?? "#fff" }
+      d="M11.069.019a2.75 2.75 0 0 0-2.905 1.795c-.098.27-.132.562-.148.869a17.25 17.25 0 0 0-.016.83v8.537a4.75 4.75 0 1 0 1.5 3.464v-8.79c.105.056.218.113.343.175l2.707 1.354c.418.209.759.379 1.038.5.281.123.558.223.843.256a2.75 2.75 0 0 0 2.905-1.794c.098-.27.132-.563.148-.87.016-.303.016-.684.016-1.151V5.11c0-.348 0-.62-.049-.878a2.75 2.75 0 0 0-1.03-1.667c-.21-.16-.452-.281-.764-.437L12.95.775c-.418-.209-.759-.379-1.038-.5-.28-.123-.558-.223-.843-.256Z"
+    />
+  </Svg>
+)
