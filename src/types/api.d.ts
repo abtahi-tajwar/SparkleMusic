@@ -32,4 +32,14 @@ namespace APIResponse {
             publishTime: string
         }
     }
+
+    type YoutubeToMp3 = {
+        link: string
+        title: string
+        filesize: number
+        progress: number
+        duration: number
+        status: string
+        msg: string
+      }
 }

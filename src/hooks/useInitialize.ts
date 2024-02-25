@@ -27,8 +27,8 @@ const useInitialize = () => {
         })
     }
 
-    const initializeMusic = () => {
-        dispatch(getMusicsFromDevice())
+    const initializeMusic = async () => {
+        const musics = await dispatch(getMusicsFromDevice());
     }
 
     useEffect(() => {

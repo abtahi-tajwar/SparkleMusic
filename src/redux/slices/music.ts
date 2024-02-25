@@ -21,6 +21,7 @@ const initialState : Store.Music = {
         unpauseMusic: false,
         replayMusic: false,
         startMusicFromPosition: false,
+        moveToMusic: false
     },
     error: {
         getMusicFromDevice: null,
@@ -28,7 +29,8 @@ const initialState : Store.Music = {
         pauseMusic: null,
         unpauseMusic: null,
         replayMusic: null,
-        startMusicFromPosition: null
+        startMusicFromPosition: null,
+        moveToMusic: null
     }
 }
 
@@ -39,8 +41,24 @@ export const getMusicsFromDevice = createAsyncThunk(
             const response = await MediaLibrary.getAssetsAsync({
                 mediaType: 'audio'
             })
+            var currentMusic : (null | Store.CurrentMusic) = null
+            if (response.assets.length) {
+                const _currentMusicAsset = response.assets[0]
+                await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+                const { sound } = await Audio.Sound.createAsync({
+                    uri: _currentMusicAsset.uri
+                })
+                currentMusic = {
+                    asset: _currentMusicAsset,
+                    playbackObject: sound,
+                    status: "loaded" as Store.MusicStatus
+                }
+            }
 
-            return response;
+            return {
+                fetchedMusicResponse: response,
+                currentMusic
+            };
         } catch (error) {
             thunkAPI.rejectWithValue({ error })
         }
@@ -171,6 +189,50 @@ export const pauseMusic = createAsyncThunk(
         
     }
 )
+export const moveToMusic = createAsyncThunk(
+    'music/next_previous',
+    async (direction : ("next" | "previous"), thunkAPI) => {
+        const { music } = thunkAPI.getState() as RootState;
+        const musics = music.musics
+        const currentMusic = music.currentMusic;
+
+        if (currentMusic) {
+            await currentMusic.playbackObject.stopAsync();
+            await currentMusic.playbackObject.unloadAsync();
+        }
+
+        if (!currentMusic) thunkAPI.rejectWithValue({ error: `No music playing currently, cannot move to ${direction} music`});
+        if (!musics || !musics.length) thunkAPI.rejectWithValue({ error: `Music not loaded from device, cannot move to ${direction} music` })
+
+        const currentMusicIndex = musics.findIndex(m => m.id === currentMusic?.asset.id)
+        var newSelectedMusic = null;
+        if (direction === "next") {
+            newSelectedMusic = musics[(currentMusicIndex + 1) % musics.length]
+        } else {
+            newSelectedMusic = currentMusicIndex === 0 ? musics[musics.length - 1] : musics[currentMusicIndex - 1]
+        }
+
+        const { id, uri, filename } = newSelectedMusic;
+        try {   
+            await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+            const { sound } = await Audio.Sound.createAsync({
+                uri
+            })
+            if (currentMusic?.status === "playing") {
+                sound.playAsync();
+            }
+            // sound.setOnPlaybackStatusUpdate(_playbackStatusUpdate)
+
+            return {
+                asset: newSelectedMusic,
+                playbackObject: sound,
+                status: currentMusic?.status === "playing" ? "playing" : "loaded" as Store.MusicStatus
+            }
+        } catch (error) {
+            thunkAPI.rejectWithValue({ error })
+        }
+    }
+)
 export const musicSlice = createSlice({
     name: 'music',
     // `createSlice` will infer the state type from the `initialState` argument
@@ -178,9 +240,6 @@ export const musicSlice = createSlice({
     reducers: {
         updateMusics(state, action) {
             state.musics = action.payload
-        },
-        setCurrentMusic (state, action) {
-            state.currentMusic = action.payload
         },
         updateCurrentMusicStatus (state, { payload } : PayloadAction<Store.MusicStatus>) {
             if (state.currentMusic) {
@@ -201,7 +260,8 @@ export const musicSlice = createSlice({
         builder.addCase(getMusicsFromDevice.fulfilled, (state, action) => {
             state.loading.getMusicFromDevice = false;
             if (action.payload) {
-                state.musics = action.payload.assets
+                state.musics = action.payload.fetchedMusicResponse.assets
+                state.currentMusic = action.payload.currentMusic
             } 
         })
         builder.addCase(getMusicsFromDevice.rejected, (state, action) => {
@@ -285,10 +345,32 @@ export const musicSlice = createSlice({
         builder.addCase(startMusicFromPosition.rejected, (state, action) => {
             state.error.startMusicFromPosition = action.error
         })
+
+        // Move to music
+        builder.addCase(moveToMusic.pending, (state, action) => {
+            state.loading.moveToMusic = true;
+        })
+        builder.addCase(moveToMusic.fulfilled, (state, action) => {
+            state.loading.moveToMusic = false;
+            if (action.payload) {
+                const { asset, playbackObject, status } = action.payload
+                if (asset && playbackObject && status) {
+
+                    state.currentMusic = {
+                        asset: asset, 
+                        playbackObject: playbackObject, 
+                        status: status
+                    }
+                }
+            } 
+        })
+        builder.addCase(moveToMusic.rejected, (state, action) => {
+            state.error.moveToMusic = action.error
+        })
     },
 })
 
 
-export const { updateMusics, setCurrentMusic, updateCurrentMusicStatus, updateCurrentMusicPosition } = musicSlice.actions
+export const { updateMusics, updateCurrentMusicStatus, updateCurrentMusicPosition } = musicSlice.actions
 
 export default musicSlice.reducer

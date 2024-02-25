@@ -9,8 +9,9 @@ import { SearchIcon } from '../../../../assets/Icons'
 import { Dimensions } from 'react-native'
 import { Grid } from '../../../atoms/Grid/Grid'
 import { FlatList } from 'react-native'
-import { searchMusicFromYoutube } from '../../../redux/slices/youtube'
+import { downloadMusicFromYoutube, searchMusicFromYoutube } from '../../../redux/slices/youtube'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
+import * as FileSystem from 'expo-file-system'
 // import { Button } from '@react-native-material/core'
 
 const NUMBER_OF_COLUMNS = 2;
@@ -23,9 +24,9 @@ function Download() {
   const searchResults = useAppSelector(state => state.youtube.searchResults)
   const [searchInput, setSearchInput] = useState("")
 
-  useEffect(() => {
-    console.log(JSON.stringify(searchResults))
-  }, [searchResults])
+  // useEffect(() => {
+  //   console.log(JSON.stringify(searchResults))
+  // }, [searchResults])
   const handleSearch = () => {
     dispatch(searchMusicFromYoutube({
       q: searchInput,
@@ -34,6 +35,11 @@ function Download() {
   }
   const handleSearchInput = (text : string) => {
     setSearchInput(text)
+  }
+
+  const handleDownload = async ({ title, id } : { id: string, title: string }) => {
+    const response = await dispatch(downloadMusicFromYoutube({ title, id })).unwrap();
+    console.log(JSON.stringify(response))
   }
   return (
     <Container>
@@ -79,6 +85,7 @@ function Download() {
                       title={data.item.snippet.title}
                       thumbnail={data.item.snippet.thumbnails.default.url}
                       description={data.item.snippet.description}
+                      onDownload={handleDownload}
                     />
                   </View>
                 )}

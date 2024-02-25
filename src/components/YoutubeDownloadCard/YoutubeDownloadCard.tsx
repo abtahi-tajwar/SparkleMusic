@@ -8,7 +8,7 @@ import { renderExceprt } from '../../utils/helpers'
 
 const TempMusicImage = require('../../../assets/dev/MusicScreenImg.jpg')
 
-export default function YoutubeDownloadCard({ id, thumbnail, title, description } : PropTypes.YoutubeDownloadCard) {
+export default function YoutubeDownloadCard({ id, thumbnail, title, description, onDownload } : PropTypes.YoutubeDownloadCard) {
     const theme = useTheme();
     const handlePreviewPress = () => {
         console.log("Pressed")
@@ -31,7 +31,7 @@ export default function YoutubeDownloadCard({ id, thumbnail, title, description 
       </View>
       <View style={styles.detailsContainer}>
         <CustomText style={styles.title}>{renderExceprt(title, 50)}</CustomText>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => onDownload({ id, title })}>
             <View style={styles.downloadBtn}>
                 <DownloadIcon2 color={'white'}/>
                 <CustomText>Download</CustomText>
