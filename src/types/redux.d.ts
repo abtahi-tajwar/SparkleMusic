@@ -25,7 +25,8 @@ namespace Store {
             pauseMusic: boolean,
             unpauseMusic: boolean,
             replayMusic: boolean,
-            startMusicFromPosition: boolean
+            startMusicFromPosition: boolean,
+            moveToMusic: boolean
         },
         error: {
             getMusicFromDevice: unknown,
@@ -33,7 +34,8 @@ namespace Store {
             pauseMusic: unknown,
             unpauseMusic: unknown,
             replayMusic: unknown,
-            startMusicFromPosition: unknown
+            startMusicFromPosition: unknown,
+            moveToMusic: unknown
         }
     }
 
@@ -45,5 +47,15 @@ namespace Store {
         status: MusicStatus,
     }
 
-    type MusicStatus = 'playing' | 'paused' | 'finished' | 'buffering'
+    type MusicStatus = 'playing' | 'paused' | 'finished' | 'buffering' | 'loaded'
+
+    type Youtube = {
+        searchResults: Array<APIResponse.YoutubeAPIResponseVideoData>,
+        loading: {
+            searchMusicFromYoutube: boolean
+        },
+        errors: {
+            searchMusicFromYoutube: unknown
+        }
+    }
 }

@@ -1,11 +1,14 @@
 import React from 'react'
 import { View, Text } from "react-native"
+import Container from '../../components/Container'
+import { Header } from '../../components'
 
 function Albums() {
   return (
-    <View>
+    <Container>
+        <Header />
         <Text>Albums</Text>
-    </View>
+    </Container>
   )
 }
 
