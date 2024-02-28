@@ -155,11 +155,11 @@ export const MediaGoNextIcon = ({ color, ...props }) => (
   </Svg>
 );
 
-export const MediaPauseIcon = ({ color, ...props }) => (
+export const MediaPauseIcon = ({ color, size = 22, ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={22}
-    height={22}
+    width={size}
+    height={size}
     fill="none"
     {...props}
   >
@@ -383,6 +383,23 @@ export const SingleMusicIcon = ({ color, ...props }) => (
     <Path
       fill={ color ?? "#fff" }
       d="M11.069.019a2.75 2.75 0 0 0-2.905 1.795c-.098.27-.132.562-.148.869a17.25 17.25 0 0 0-.016.83v8.537a4.75 4.75 0 1 0 1.5 3.464v-8.79c.105.056.218.113.343.175l2.707 1.354c.418.209.759.379 1.038.5.281.123.558.223.843.256a2.75 2.75 0 0 0 2.905-1.794c.098-.27.132-.563.148-.87.016-.303.016-.684.016-1.151V5.11c0-.348 0-.62-.049-.878a2.75 2.75 0 0 0-1.03-1.667c-.21-.16-.452-.281-.764-.437L12.95.775c-.418-.209-.759-.379-1.038-.5-.28-.123-.558-.223-.843-.256Z"
+    />
+  </Svg>
+)
+
+export const DeleteIcon = ({ color, size=19, ...props }) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    fill="none"
+    {...props}
+  >
+    <Path
+      fill={color ?? "white"}
+      fillRule="evenodd"
+      d="M6.65 14.476h1.9V7.238h-1.9v7.238Zm3.8 0h1.9V7.238h-1.9v7.238Zm-5.7 1.81h9.5V5.429h-9.5v10.857Zm1.9-12.667h5.7v-1.81h-5.7v1.81Zm7.6 0V0h-9.5v3.619H0v1.81h2.85v12.666h13.3V5.43H19v-1.81h-4.75Z"
+      clipRule="evenodd"
     />
   </Svg>
 )

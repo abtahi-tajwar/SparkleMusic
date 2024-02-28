@@ -51,11 +51,23 @@ namespace Store {
 
     type Youtube = {
         searchResults: Array<APIResponse.YoutubeAPIResponseVideoData>,
+        downloadProgress: number,
+        currentDownloadResumable: (null | import('expo-file-system').DownloadResumable),
+        currentDownloadObject: YoutubeCurrentDownloadObject,
         loading: {
             searchMusicFromYoutube: boolean
         },
         errors: {
-            searchMusicFromYoutube: unknown
+            searchMusicFromYoutube: unknown,
+            startDownloadMusicFromYoutube: unknown
         }
     }
+    type YoutubeCurrentDownloadObject = (null | {
+        details: {
+            id: string
+            title: string,
+            initialDownloadLocation: string,
+        },
+        downloadResumable: import('expo-file-system').DownloadResumable
+    })
 }
