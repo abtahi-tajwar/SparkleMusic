@@ -10,7 +10,12 @@ import MusicScreen from "../tabs/Main/MusicScreen/MusicScreen";
 /** Types */
 import { RouteProp, ParamListBase } from "@react-navigation/native";
 /** Icons */
-import { MusicIcon, DownloadIcon, AlbumIcon } from "../../assets/Icons";
+import {
+  MusicIcon,
+  DownloadIcon,
+  AlbumIcon,
+  NowPlayingIcon,
+} from "../../assets/Icons";
 import { useTheme } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -25,6 +30,8 @@ function Home() {
       return <DownloadIcon />;
     } else if (route.name === "Albums") {
       return <AlbumIcon />;
+    } else if (route.name === "Now Playing") {
+      return <NowPlayingIcon />;
     }
 
     // You can return any component that you like here!
