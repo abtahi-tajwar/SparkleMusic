@@ -5,6 +5,7 @@ import { DownloadIcon, DownloadIcon2, PreviewIcon } from '../../../assets/Icons'
 import CustomText from '../../atoms/Typography/CustomText'
 import { useTheme } from '../Theme'
 import { renderExceprt } from '../../utils/helpers'
+import { useAppSelector } from '../../redux/hooks'
 
 const TempMusicImage = require('../../../assets/dev/MusicScreenImg.jpg')
 
@@ -16,6 +17,7 @@ export default function YoutubeDownloadCard({ id, thumbnail, title, description,
     const styles = createStyles({ 
         theme
     })
+    const currentDownloadObject = useAppSelector(state => state.youtube.currentDownloadObject)
   return (
     <View style={styles.container}>
         <View style={styles.imgContainer}>
@@ -30,13 +32,13 @@ export default function YoutubeDownloadCard({ id, thumbnail, title, description,
         </TouchableHighlight>
       </View>
       <View style={styles.detailsContainer}>
-        <CustomText style={styles.title}>{renderExceprt(title, 50)}</CustomText>
-        <TouchableHighlight onPress={() => onDownload({ id, title })}>
+        <CustomText variant='300' style={styles.title}>{renderExceprt(title, 50)}</CustomText>
+        {!currentDownloadObject && <TouchableHighlight onPress={() => onDownload({ id, title })}>
             <View style={styles.downloadBtn}>
                 <DownloadIcon2 color={'white'}/>
                 <CustomText>Download</CustomText>
             </View>
-        </TouchableHighlight>
+        </TouchableHighlight>}
       </View>
     </View>
   )
@@ -81,7 +83,7 @@ const createStyles = ({ theme } : { theme: Config.Theme}) => {
             padding: 6
         },
         title: {
-            fontSize: 14,
+            fontSize: 12,
             marginBottom: 'auto',
             height: 50,
             overflow: 'hidden'

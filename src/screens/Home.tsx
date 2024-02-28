@@ -13,6 +13,7 @@ import { RouteProp, ParamListBase } from "@react-navigation/native";
 import { MusicIcon, DownloadIcon, AlbumIcon, SingleMusicIcon } from "../../assets/Icons";
 import { useTheme } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Playground from "../components/Playground/Playground";
 
 const Tab = createBottomTabNavigator();
 
@@ -59,11 +60,11 @@ function Home() {
         component={Download}
         options={{ headerShown: false }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Albums"
         component={Albums}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Tab.Screen
         name="Now Playing"
         component={MusicScreen}

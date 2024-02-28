@@ -18,7 +18,7 @@ import { searchMusicFromYoutube } from "../../../redux/slices/youtube";
 function AllMusic () {
     const dispatch = useAppDispatch();
     const musicState = useAppSelector(state => state.music)
-
+    const [listRefreshing, setListRefreshing] = useState(false)
     const [musicList, setMusicList] = useState<Array<Utils.Key<PropTypes.MusicListItemIterables>>>([])
 
     useEffect(() => {
@@ -58,6 +58,10 @@ function AllMusic () {
     const handlePause = () => {
         dispatch(pauseMusic())
     }
+    const handleRefresh = () => {
+        setListRefreshing(true)
+        dispatch(getMusicsFromDevice()).then(() => setListRefreshing(false))
+    }
     
     return (
         mediaPermission.granted ? <Container>
@@ -83,9 +87,11 @@ function AllMusic () {
                             onClick={handleMusicClick}
                         /> 
                     )}
+                    refreshing={listRefreshing}
                     keyExtractor={item => item.key}
+                    onRefresh={handleRefresh}
                 />
-                {musicState.currentMusic && <BottomFloatPopup />}
+                {/* {musicState.currentMusic && <BottomFloatPopup />} */}
             </View> 
             :  <View style={style.noDataContainer}>
                 <NoData 

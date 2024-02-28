@@ -44,7 +44,7 @@ export const getMusicsFromDevice = createAsyncThunk(
             var currentMusic : (null | Store.CurrentMusic) = null
             if (response.assets.length) {
                 const _currentMusicAsset = response.assets[0]
-                await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+                await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, staysActiveInBackground: true });
                 const { sound } = await Audio.Sound.createAsync({
                     uri: _currentMusicAsset.uri
                 })
