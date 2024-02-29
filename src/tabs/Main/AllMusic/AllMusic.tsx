@@ -12,18 +12,17 @@ import BottomFloatPopup from "../../../components/BottomFloatMusicPopup/BottomFl
 import { youtubeAPI } from "../../../http/axios";
 import { apis } from "../../../http/routes";
 import { AxiosResponse } from "axios";
+import { searchMusicFromYoutube } from "../../../redux/slices/youtube";
 
 
 function AllMusic () {
     const dispatch = useAppDispatch();
     const musicState = useAppSelector(state => state.music)
-
+    const [listRefreshing, setListRefreshing] = useState(false)
     const [musicList, setMusicList] = useState<Array<Utils.Key<PropTypes.MusicListItemIterables>>>([])
 
     useEffect(() => {
-        youtubeAPI.get(apis.youtubeSearch({ q: "calm coding music" })).then((res : AxiosResponse<string>) => {
-            console.log(res.data)
-        })
+        
         setMusicList(musicState.musics.map((music, mi) => ({
             key: `${mi}`,
             data: {
@@ -59,6 +58,10 @@ function AllMusic () {
     const handlePause = () => {
         dispatch(pauseMusic())
     }
+    const handleRefresh = () => {
+        setListRefreshing(true)
+        dispatch(getMusicsFromDevice()).then(() => setListRefreshing(false))
+    }
     
     return (
         mediaPermission.granted ? <Container>
@@ -84,9 +87,11 @@ function AllMusic () {
                             onClick={handleMusicClick}
                         /> 
                     )}
+                    refreshing={listRefreshing}
                     keyExtractor={item => item.key}
+                    onRefresh={handleRefresh}
                 />
-                {musicState.currentMusic && <BottomFloatPopup />}
+                {/* {musicState.currentMusic && <BottomFloatPopup />} */}
             </View> 
             :  <View style={style.noDataContainer}>
                 <NoData 

@@ -4,6 +4,7 @@ import { ViewStyle } from 'react-native';
 import { useAppSelector } from '../../redux/hooks';
 import { useTheme } from '../Theme';
 import CustomText from '../../atoms/Typography/CustomText';
+import { renderExceprt } from '../../utils/helpers';
 
 const TempImage : ImageSourcePropType = require('../../../assets/dev/music-2.png')
 
@@ -62,14 +63,14 @@ export default function BottomFloatPopup() {
           source={TempImage}
           style={style.image}
         />
-        <CustomText style={style.text}>{currentMusic?.asset.filename}</CustomText>
+        <CustomText style={style.text}>{renderExceprt(currentMusic?.asset.filename as string, 30)}</CustomText>
       </Animated.View>
+      
     </TouchableOpacity>
   )
 }
 
 const createStyle = (theme : Config.Theme) => {
-  
     return StyleSheet.create({
           container: {
             // transformOrigin: "center",

@@ -9,10 +9,10 @@ export function Header() {
   return (
     <View style={style.container}>
       <View style={style.mainLogo}><MainLogoWithText fill={theme.colors?.primary} /></View>
-      <View style={style.iconsContainer}>
+      {/* <View style={style.iconsContainer}>
         <IconButton icon={<ProfileIcon />} />
         <IconButton icon={<SettingsIcon />} />
-      </View>
+      </View> */}
     </View>
   )
 }

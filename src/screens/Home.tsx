@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 /** Tabs */
 import AllMusic from "../tabs/Main/AllMusic/AllMusic";
-import Download from "../tabs/Main/Download";
+import Download from "../tabs/Main/Download/Download";
 import Albums from "../tabs/Main/Albums";
 import MusicScreen from "../tabs/Main/MusicScreen/MusicScreen";
 /** Types */
@@ -14,10 +14,11 @@ import {
   MusicIcon,
   DownloadIcon,
   AlbumIcon,
-  NowPlayingIcon,
+  SingleMusicIcon,
 } from "../../assets/Icons";
 import { useTheme } from "../components";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Playground from "../components/Playground/Playground";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +32,7 @@ function Home() {
     } else if (route.name === "Albums") {
       return <AlbumIcon />;
     } else if (route.name === "Now Playing") {
-      return <NowPlayingIcon />;
+      return <SingleMusicIcon color={"white"} />;
     }
 
     // You can return any component that you like here!
@@ -64,11 +65,11 @@ function Home() {
         component={Download}
         options={{ headerShown: false }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Albums"
         component={Albums}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Tab.Screen
         name="Now Playing"
         component={MusicScreen}

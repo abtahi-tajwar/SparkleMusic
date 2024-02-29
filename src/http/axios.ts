@@ -5,7 +5,6 @@ export const youtubeAPI = axios.create({
     timeout: 1000,
     // headers: {'X-Custom-Header': 'foobar'},
     params: {
-      'key': process.env.YOUTUBE_DATA_API_KEY
+      'key': process.env.REACT_APP_YOUTUBE_DATA_API_KEY
     }
   });
-  

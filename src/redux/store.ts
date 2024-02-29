@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import permission from './slices/permission'
 import music from './slices/music'
+import youtube from './slices/youtube'
 // ...
 
 export const store = configureStore({
   reducer: {
     permission: permission,
-    music: music
+    music: music,
+    youtube: youtube
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false

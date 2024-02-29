@@ -1,6 +1,21 @@
 namespace Config {
     type Theme = {
-        colors?: { [key: string]: any },
-        typography?: { [key: string]: any }
+        colors: {
+            primary: string,
+            primaryLight: string,
+            backgroundPrimary: string
+        },
+        typography: {
+            fonts: {
+                primary: {
+                    light: string,
+                    lightItalic: string,
+                    regular: string,
+                    regularItalic: string,
+                    bold: string,
+                    boldItalic: string
+                }
+            }
+        }
     }
 }

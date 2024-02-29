@@ -5,6 +5,7 @@ import {
   unpauseMusic,
   replayMusic,
   pauseMusic,
+  moveToMusic,
 } from "../../redux/slices/music";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
@@ -42,15 +43,22 @@ export function CurrentMusicActionButtons({
   const onPause = () => {
     dispatch(pauseMusic());
   };
+  const handleMoveNext = () => {
+    dispatch(moveToMusic("next"))
+  }
+  const handleMovePrevious = () => {
+    dispatch(moveToMusic("previous"))
+  }
   return (
     currentMusic && (
       <View style={style}>
         <IconButton
+          onPress={handleMovePrevious}
           icon={
             varient === "mini" ? (
-              <MediaGoPreviousIcon />
+              <MediaGoPreviousIcon color={'white'} />
             ) : (
-              <MediaGoPreviousIconLarge />
+              <MediaGoPreviousIconLarge color={'white'} />
             )
           }
         />
@@ -66,7 +74,7 @@ export function CurrentMusicActionButtons({
             }
           ></IconButton>
         )}
-        {currentMusic.status === "paused" && (
+        {(currentMusic.status === "paused" || currentMusic.status === "loaded") && (
           <IconButton
             onPress={() => onPlay()}
             icon={
@@ -83,16 +91,17 @@ export function CurrentMusicActionButtons({
             onPress={() => onReplay()}
             icon={
               varient === "mini" ? (
-                <MediaReplayIcon color={theme.colors?.primary} />
+                <MediaReplayIcon color={theme.colors.primary} />
               ) : (
-                <MediaReplayIconLarge color={theme.colors?.primary} />
+                <MediaReplayIconLarge color={theme.colors.primary} />
               )
             }
           ></IconButton>
         )}
         <IconButton
+          onPress={handleMoveNext}
           icon={
-            varient === "mini" ? <MediaGoNextIcon /> : <MediaGoNextIconLarge />
+            varient === "mini" ? <MediaGoNextIcon color={'white'} /> : <MediaGoNextIconLarge color={'white'}  />
           }
         />
       </View>
