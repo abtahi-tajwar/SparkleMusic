@@ -7,10 +7,12 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "avd": "emulator @Pixel_3a_API_34_extension_level_7_arm64-v8a"
+    "avd": "emulator @Pixel_3a_API_34_extension_level_7_arm64-v8a",
+    "build:android": "eas build -p android --profile preview"
   },
   "dependencies": {
     "@expo-google-fonts/aleo": "^0.2.3",
+    "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-native-community/slider": "^4.5.0",
     "@react-native-material/core": "^1.3.7",
     "@react-navigation/bottom-tabs": "^6.5.11",
