@@ -65,11 +65,11 @@ function Home() {
         component={Download}
         options={{ headerShown: false }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Albums"
         component={Albums}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Tab.Screen
         name="Now Playing"
         component={MusicScreen}

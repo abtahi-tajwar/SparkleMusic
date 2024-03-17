@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import * as MediaLibrary from "expo-media-library";
-import { PagedInfo, Asset } from "expo-media-library";
-import { Audio } from "expo-av";
-import { Sound, SoundObject } from "expo-av/build/Audio";
-import { RootState } from "../store";
-import { AVPlaybackStatus, Playback } from "expo-av/build/AV";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import * as MediaLibrary from 'expo-media-library'
+import { PagedInfo, Asset } from 'expo-media-library'
+import { Audio } from 'expo-av'
+import { Sound, SoundObject } from 'expo-av/build/Audio'
+import { RootState } from '../store'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MusicPlaceholder = require("../../../assets/music-placeholder.jpg");
 
@@ -66,34 +66,36 @@ export const getMusicsFromDevice = createAsyncThunk(
   )
 
 export const playMusic = createAsyncThunk(
-  "music/play",
-  async (_id: string, thunkAPI) => {
-    const { music } = thunkAPI.getState() as RootState;
-    const selectedMusic = music.musics.find((m) => m.id === _id);
-    const currentMusic = music.currentMusic;
-    if (currentMusic) {
-      await currentMusic.playbackObject.stopAsync();
-      await currentMusic.playbackObject.unloadAsync();
-    }
-    if (!selectedMusic) {
-      thunkAPI.rejectWithValue({ error: "Invalid music!" });
-    }
-    const { id, uri, filename } = selectedMusic as Asset;
-    try {
-      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-      const { sound } = await Audio.Sound.createAsync({
-        uri,
-      });
-      sound.playAsync();
-      // sound.setOnPlaybackStatusUpdate(_playbackStatusUpdate)
-
-      return {
-        asset: selectedMusic,
-        playbackObject: sound,
-        status: "playing" as Store.MusicStatus,
-      };
-    } catch (error) {
-      thunkAPI.rejectWithValue({ error });
+    'music/play',
+    async (_id : string, thunkAPI) => {
+        const { music } = thunkAPI.getState() as RootState
+        const selectedMusic = music.musics.find(m => m.id === _id)
+        const currentMusic = music.currentMusic;
+        if (currentMusic) {
+            await currentMusic.playbackObject.stopAsync();
+            await currentMusic.playbackObject.unloadAsync();
+        }
+        if (!selectedMusic) {
+            thunkAPI.rejectWithValue({ error: 'Invalid music!' })
+        }
+        const { id, uri, filename } = selectedMusic as Asset
+        try {   
+            await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+            const { sound } = await Audio.Sound.createAsync({
+                uri
+            })
+            sound.playAsync();
+            // sound.setOnPlaybackStatusUpdate(_playbackStatusUpdate)
+            
+            return {
+                asset: selectedMusic,
+                playbackObject: sound,
+                status: "playing" as Store.MusicStatus
+            }
+        } catch (error) {
+            thunkAPI.rejectWithValue({ error })
+        }
+        
     }
   }
 );
@@ -193,7 +195,7 @@ export const pauseMusic = createAsyncThunk(
 )
 export const moveToMusic = createAsyncThunk(
     'music/next_previous',
-    async (direction : ("next" | "previous"), thunkAPI) => {
+    async ({ direction, autoPlay = false } : {direction : ("next" | "previous") , autoPlay: boolean}, thunkAPI) => {
         const { music } = thunkAPI.getState() as RootState;
         const musics = music.musics
         const currentMusic = music.currentMusic;
@@ -220,7 +222,7 @@ export const moveToMusic = createAsyncThunk(
             const { sound } = await Audio.Sound.createAsync({
                 uri
             })
-            if (currentMusic?.status === "playing") {
+            if (currentMusic?.status === "playing" || autoPlay) {
                 sound.playAsync();
             }
             // sound.setOnPlaybackStatusUpdate(_playbackStatusUpdate)
@@ -228,7 +230,8 @@ export const moveToMusic = createAsyncThunk(
             return {
                 asset: newSelectedMusic,
                 playbackObject: sound,
-                status: currentMusic?.status === "playing" ? "playing" : "loaded" as Store.MusicStatus
+                status: currentMusic?.status === "playing" ? "playing" : "loaded" as Store.MusicStatus,
+                autoPlay
             }
         } catch (error) {
             thunkAPI.rejectWithValue({ error })
@@ -354,13 +357,13 @@ export const musicSlice = createSlice({
         builder.addCase(moveToMusic.fulfilled, (state, action) => {
             state.loading.moveToMusic = false;
             if (action.payload) {
-                const { asset, playbackObject, status } = action.payload
+                const { asset, playbackObject, autoPlay, status } = action.payload
                 if (asset && playbackObject && status) {
 
                     state.currentMusic = {
                         asset: asset, 
                         playbackObject: playbackObject, 
-                        status: status
+                        status: autoPlay ? "playing" : status
                     }
                 }
             } 
