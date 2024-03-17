@@ -1,9 +1,10 @@
 import { AVPlaybackStatus } from "expo-av";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { useEffect } from "react";
-import { updateCurrentMusicPosition, updateCurrentMusicStatus } from "../redux/slices/music";
+import { useEffect, useState } from "react";
+import { moveToMusic, updateCurrentMusicPosition, updateCurrentMusicStatus } from "../redux/slices/music";
 
 export const useMusicEvents = () => {
+    const [autoPlay, setAutoPlay] = useState(true);
     const dispatch = useAppDispatch();
     const musicState = useAppSelector(state => state.music)
 
@@ -42,6 +43,7 @@ export const useMusicEvents = () => {
               // The player has just finished playing and will stop. Maybe you want to play something else?
                 dispatch(updateCurrentMusicPosition(playbackStatus.positionMillis))
                 dispatch(updateCurrentMusicStatus("finished"))
+                if (autoPlay) dispatch(moveToMusic({ direction: "next", autoPlay: true }))
             }
           }
     }
