@@ -5,7 +5,10 @@ import { Header } from "../../components";
 import { styles } from "./Style";
 import { SortIcon, AddIcon } from "../../../assets/Icons";
 import AlbumComponent from "../../components/AlbumComponent/AlbumComponent";
+import { useAppSelector } from "../../redux/hooks";
 function Albums() {
+  const albums = useAppSelector((state) => state.album.albums);
+  console.log(albums);
   return (
     <Container>
       <Header />
@@ -27,9 +30,12 @@ function Albums() {
         </TouchableOpacity>
 
         <View style={styles.albumContainer}>
-          <AlbumComponent />
-          <AlbumComponent />
-          <AlbumComponent />
+          {albums &&
+            albums.map((album, i: Number) => (
+              <View>
+                <AlbumComponent key={i} title={album.title} />
+              </View>
+            ))}
         </View>
       </View>
     </Container>
